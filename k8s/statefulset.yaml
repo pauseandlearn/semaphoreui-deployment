@@ -226,3 +226,26 @@ spec:
       args:
         - --spider
         - http://semaphore-ansible-semaphore:3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: semaphore-ing
+  namespace: automation
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - automation.pauseandlearn.net
+    secretName: pauseandlearn-tls
+  rules:
+  - host: automation.pauseandlearn.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: semaphore-ansible-semaphore
+            port:
+              name: http
