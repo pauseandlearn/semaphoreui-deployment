@@ -1,3 +1,8 @@
+
+### Generate ssh key
+```bash
+ssh-keygen -t rsa -b 4096 -m PEM -f ~/.ssh/ansible
+```
 ### Create config secret
 
 ```bash
