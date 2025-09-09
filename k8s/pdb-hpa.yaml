@@ -1,0 +1,31 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: semaphore-ansible-semaphore-pdb
+  namespace: automation
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ansible-semaphore
+      app.kubernetes.io/instance: semaphore
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: semaphore-ansible-semaphore-hpa
+  namespace: automation
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: semaphore-ansible-semaphore
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
