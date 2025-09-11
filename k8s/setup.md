@@ -12,7 +12,7 @@ ssh-keygen -t rsa -b 4096 -m PEM -f ~/.ssh/ansible
 ### Create ssh secret
 
 ```bash
-kubectl -n automation create secret generic semaphore-ssh --from-file ~/.ssh/ansible
+kubectl -n automation create secret generic ansible-ssh --from-file ~/.ssh/ansible
 ```
 
 ### Create admin secret
